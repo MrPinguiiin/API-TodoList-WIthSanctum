@@ -17,7 +17,10 @@ class TodoController extends Controller
     public function index()
     {
         // dd('okeee');
-        return TodoResource::collection(Auth::user()->todos()->latest('id')->get());
+        return response()->json([
+            auth()->user()->todos()->latest('id')->get()
+        ]);
+        // return TodoResource::collection(auth()->user()->todos()->latest('id')->get());
     }
 
     /**

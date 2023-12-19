@@ -15,7 +15,7 @@ class RegisterController extends Controller
     public function __invoke(Request $request)
     {
 
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
@@ -31,12 +31,15 @@ class RegisterController extends Controller
             'token' => $request->remember_token,
         ]);
 
-       $token = $registered->createToken('todo-api')->plainTextToken;
+    //    $token = $registered->createToken('todo-api')->plainTextToken;
 
         return response()->json([$registered,
 
-            'token' => $token,
+            // 'token' => $token,
             'success' => 'You Registered, Please Login!'
         ]);
+
     }
+
+
 }

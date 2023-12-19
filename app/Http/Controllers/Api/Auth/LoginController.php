@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -18,13 +19,13 @@ class LoginController extends Controller
             'password' => 'required|',
         ]);
 
-
         if (Auth::attempt($credentials)) {
 
             return response()->json([
                 'success' => 'You are logged in',
                 'status' => 200,
-                  'token' =>  Auth::user()->createToken('todo-api')->plainTextToken,
+                //   'token' =>  JWTAuth::attempt($credentials)
+                  'token' =>  auth()->user()->createToken('todo-api')->plainTextToken,
             ]);
         }
 
@@ -33,6 +34,21 @@ class LoginController extends Controller
                     'status' => 401
                 ]);
 
+        // if (! $token = auth()->attempt($credentials)) {
+        //     return response()->json(['error' => 'Email & Password Not Match'], 401);
+        // }
+
+        // return $this->respondWithToken($token);
+
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 
 }
