@@ -25,7 +25,7 @@ class LoginController extends Controller
                 'success' => 'You are logged in',
                 'status' => 200,
                 //   'token' =>  JWTAuth::attempt($credentials)
-                  'token' =>  auth()->user()->createToken('todo-api')->plainTextToken,
+                  'token' =>  auth()->user()->createToken($request->password)->plainTextToken,
             ]);
         }
 

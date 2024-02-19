@@ -80,6 +80,13 @@ class TodoController extends Controller
 
         $todo->delete();
 
+        // if (!$todo->exists() === false) {
+        //     return response()->json([
+
+        //         'status' => 404,
+        //         'message' => 'Todo not found',
+        //     ]);
+        // }
         return response()->json([
 
             'status' => 200,
